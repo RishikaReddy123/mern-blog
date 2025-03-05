@@ -48,6 +48,7 @@ app.get("/", (req, res) => {
 
 app.get("/api/articles/:name", async (req, res) => {
   const articleName = req.params.name;
+  console.log(`Fetching article: ${articleName}`);
   try {
     const article = await Article.findOne({ name: articleName });
     if (!article) {
@@ -60,10 +61,10 @@ app.get("/api/articles/:name", async (req, res) => {
   }
 });
 
-app.post("/api/articles/:articleName/add-comments", async (req, res) => {
+app.post("/api/articles/:name/add-comments", async (req, res) => {
   const { username, text } = req.body;
-  const articleName = req.params.articleName;
-
+  const articleName = req.params.name;
+  console.log(`Adding comment to article: ${articleName}`);
   try {
     let article = await Article.findOne({ name: articleName });
 
@@ -78,7 +79,7 @@ app.post("/api/articles/:articleName/add-comments", async (req, res) => {
     await article.save();
     res.status(200).send(article);
   } catch (err) {
-    console.error(err);
+    console.error("Error adding comment:", err);
     res.status(500).send("Server Error!");
   }
 });

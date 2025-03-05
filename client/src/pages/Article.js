@@ -22,6 +22,7 @@ const Article = () => {
         console.error("Error fetching article data:", error);
       }
     };
+
     if (name) {
       fetchData();
     }

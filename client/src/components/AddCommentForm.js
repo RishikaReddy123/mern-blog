@@ -6,13 +6,16 @@ const AddCommentForm = ({ articleName, setArticlesInfo }) => {
 
   const addComments = async (e) => {
     e.preventDefault();
-    const result = await fetch(`/api/articles/${articleName}/add-comments`, {
-      method: "post",
-      body: JSON.stringify({ username, text: commentText }),
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
+    const result = await fetch(
+      `https://nodeblog-41ui.onrender.com/api/articles/${articleName}/add-comments`,
+      {
+        method: "post",
+        body: JSON.stringify({ username, text: commentText }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+    );
     const body = await result.json();
     setArticlesInfo(body);
     setUsername("");
