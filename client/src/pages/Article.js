@@ -13,7 +13,9 @@ const Article = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetch(`/api/articles/${name}`);
+        const result = await fetch(
+          `https://nodeblog-41ui.onrender.com/api/articles/${name}`
+        );
         const body = await result.json();
         setArticlesInfo(body);
       } catch (error) {
