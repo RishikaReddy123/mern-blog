@@ -60,9 +60,9 @@ app.get("/api/articles/:name", async (req, res) => {
   }
 });
 
-app.post("/api/articles/:name/add-comments", async (req, res) => {
+app.post("/api/articles/:articleName/add-comments", async (req, res) => {
   const { username, text } = req.body;
-  const articleName = req.params.name;
+  const articleName = req.params.articleName;
 
   try {
     let article = await Article.findOne({ name: articleName });
