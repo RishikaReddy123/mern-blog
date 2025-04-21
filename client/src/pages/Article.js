@@ -14,12 +14,16 @@ const Article = () => {
     const fetchData = async () => {
       try {
         const result = await fetch(
-          `https://nodeblog-41ui.onrender.com/api/articles/${name}`
+          `${process.env.REACT_APP_BACKEND_URL}/api/articles/${name}`
         );
+        if (!result.ok) {
+          throw new Error("Failed to fetch article");
+        }
         const body = await result.json();
         setArticlesInfo(body);
       } catch (error) {
         console.error("Error fetching article data:", error);
+        setArticlesInfo({ notFound: true });
       }
     };
 
@@ -33,7 +37,7 @@ const Article = () => {
     (article) => article.name !== name
   );
 
-  if (!article) {
+  if (!article || articlesInfo.notFound) {
     return (
       <>
         <NotFound />
@@ -58,7 +62,6 @@ const Article = () => {
         </p>
       ))}
       <CommentsList comments={articlesInfo?.comments || []} />
-
       <AddCommentForm articleName={name} setArticlesInfo={setArticlesInfo} />
       <h2 className="sm:text-2xl text-xl font-bold my-4 text-gray-900">
         Other articles
